@@ -20,6 +20,4 @@ interface AssetRepository extends JpaRepository<AssetEntity, Long>, JpaSpecifica
         @Param("customerId") UUID customerId,
         @Param("assetName") String assetName
     );
-
-    List<AssetEntity> findAllByCustomerId(UUID customerId);
 }
