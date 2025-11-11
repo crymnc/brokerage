@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "jpaAuditorProvider", dateTimeProviderRef = "jpaAuditingDateTimeProvider")
-public class DopiJpaAuditConfiguration {
+public class JpaAuditConfiguration {
 
 
     /**
