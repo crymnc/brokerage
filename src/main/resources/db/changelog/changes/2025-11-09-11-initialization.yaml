@@ -1,0 +1,247 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1762716419149-1
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: asset_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1762716419149-2
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: stock_order_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1762716419149-3
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_asset
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: asset_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: size
+                  type: DECIMAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: usable_size
+                  type: DECIMAL
+            tableName: asset
+  - changeSet:
+      id: 1762716419149-4
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_customer
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValue: '-1'
+                  name: created_by
+                  type: varchar(36)
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  defaultValue: '-1'
+                  name: updated_by
+                  type: varchar(36)
+              - column:
+                  name: update_version
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: surname
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: role_id
+                  type: BIGINT
+            tableName: customer
+  - changeSet:
+      id: 1762716419149-5
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_stock_order
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValue: '-1'
+                  name: created_by
+                  type: varchar(36)
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  defaultValue: '-1'
+                  name: updated_by
+                  type: varchar(36)
+              - column:
+                  name: update_version
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: asset_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: order_side_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: size
+                  type: DECIMAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: DECIMAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: order_status_id
+                  type: BIGINT
+            tableName: stock_order
+  - changeSet:
+      id: 1762716419149-6
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: customer_id
+            indexName: as_customer_idx
+            tableName: asset
+        - createIndex:
+            columns:
+              - column:
+                  name: customer_id
+            indexName: o_customer_idx
+            tableName: stock_order
+        - createIndex:
+            columns:
+              - column:
+                  name: customer_id
+              - column:
+                  name: asset_name
+            indexName: as_cid_an_uidx
+            tableName: asset
+            unique: true
+        - createIndex:
+            columns:
+              - column:
+                  name: username
+            indexName: c_username_uidx
+            tableName: customer
+            unique: true
+  - changeSet:
+      id: 1762716419149-7
+      author: cansahintas
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  value: 019a7318-0928-7ce5-9420-b61f070aad4e
+              - column:
+                  name: name
+                  value: System
+              - column:
+                  name: surname
+                  value: Administrator
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: $2a$10$C8wkoISoeaUNPC73OhaD4ejU7zkPebwUE/y4LayTQORCYK5Nr4KSC
+              - column:
+                  name: role_id
+                  valueNumeric: 1
+              - column:
+                  name: created_at
+                  valueDate: now()
+              - column:
+                  name: created_by
+                  value: '-1'
+
